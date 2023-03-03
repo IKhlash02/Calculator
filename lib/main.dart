@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var nilai = '0';
+  var hasil = "";
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,23 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Container(
           color: Theme.of(context).primaryColor,
           child: Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.bottomRight,
             child: Text(
               nilai.toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3!
+                  .copyWith(color: Colors.white),
+            ),
+          ),
+        )),
+        Expanded(
+            child: Container(
+          color: Theme.of(context).primaryColor,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              hasil.toString(),
               style: Theme.of(context)
                   .textTheme
                   .headline3!
@@ -62,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 setState(() {
                   nilai = '0';
+                  hasil = "";
                 });
               },
             ),
@@ -189,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (nilai[nilai.length - 1].contains('*')) {
                       nilai = nilai;
                     } else {
-                      nilai = '${nilai}*';
+                      nilai = '$nilai*';
                     }
                   },
                 );
@@ -282,7 +298,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   } catch (e) {
                     result = "Error";
                   }
-                  nilai = result;
+                  nilai = "";
+                  hasil = result;
                 });
               },
             ),
