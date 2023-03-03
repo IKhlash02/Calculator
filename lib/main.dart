@@ -243,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             CalculatorButton(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.white,
                 foregroundColor: Theme.of(context).primaryColorDark,
                 text: '.',
                 onTap: () {
