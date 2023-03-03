@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -181,14 +182,14 @@ class _MyHomePageState extends State<MyHomePage> {
             CalculatorButton(
               backgroundColor: Theme.of(context).primaryColorDark,
               foregroundColor: Theme.of(context).primaryColorLight,
-              text: 'X',
+              text: 'x',
               onTap: () {
                 setState(
                   () {
-                    if (nilai[nilai.length - 1].contains('X')) {
+                    if (nilai[nilai.length - 1].contains('*')) {
                       nilai = nilai;
                     } else {
-                      nilai = '${nilai}X';
+                      nilai = '${nilai}*';
                     }
                   },
                 );
@@ -261,7 +262,29 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Theme.of(context).primaryColorLight,
               foregroundColor: Theme.of(context).primaryColorDark,
               text: '=',
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  String equation = nilai;
+                  String result;
+
+                  if (equation.endsWith("+") ||
+                      equation.endsWith("-") ||
+                      equation.endsWith("*") ||
+                      equation.endsWith("/")) {
+                    equation = equation.substring(0, equation.length - 1);
+                  }
+
+                  try {
+                    Parser p = Parser();
+                    Expression exp = p.parse(equation);
+                    ContextModel cm = ContextModel();
+                    result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+                  } catch (e) {
+                    result = "Error";
+                  }
+                  nilai = result;
+                });
+              },
             ),
             CalculatorButton(
               backgroundColor: Theme.of(context).primaryColorDark,
