@@ -32,294 +32,271 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var nilai = '0';
   var hasil = "";
+  bool isBold = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xfffcf6e6),
       body: Column(children: [
         Expanded(
-            child: Container(
-          color: Theme.of(context).primaryColor,
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: Text(
-              nilai.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(color: Colors.white),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                const Expanded(child: SizedBox()),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(nilai.toString(),
+                      style: (isBold)
+                          ? const TextStyle(
+                              fontSize: 50,
+                              color: Color(0xff394d3f),
+                              fontWeight: FontWeight.bold)
+                          : const TextStyle(
+                              fontSize: 25,
+                              color: Color(0xff394d3f),
+                              fontWeight: FontWeight.w400)),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    hasil.toString(),
+                    style: const TextStyle(
+                        fontSize: 50,
+                        color: Color(0xff394d3f),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
           ),
-        )),
-        Expanded(
-            child: Container(
-          color: Theme.of(context).primaryColor,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              hasil.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(color: Colors.white),
-            ),
-          ),
-        )),
-        GridView.count(
-          padding: const EdgeInsets.all(0),
-          shrinkWrap: true,
-          crossAxisCount: 4,
-          children: <Widget>[
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorLight,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: 'c',
-              onTap: () {
-                setState(() {
-                  nilai = '0';
-                  hasil = "";
-                });
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorLight,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '+/-',
-              onTap: () {
-                setState(() {
-                  if (nilai != '0') {
-                    if (nilai.contains('-')) {
-                      nilai = nilai.substring(0, nilai.length - 1);
-                    } else {
-                      nilai = '-$nilai';
-                    }
-                  }
-                });
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorLight,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '%',
-              onTap: () {
-                setState(
-                  () {
-                    if (nilai[nilai.length - 1].contains('%')) {
-                      nilai = nilai;
-                    } else {
-                      nilai = '$nilai%';
-                    }
-                  },
-                );
-              },
-            ),
-            CalculatorButton.Icon(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              foregroundColor: Theme.of(context).primaryColorLight,
-              text: 'backspace',
-              icon: Icons.backspace,
-              onTap: () {
-                setState(() {
-                  if (nilai == '0' ||
-                      nilai == '' ||
-                      nilai.length == 1 ||
-                      (nilai[0].contains('-') && nilai.length == 2)) {
+        ),
+        Container(
+          padding:
+              const EdgeInsets.only(bottom: 20, left: 10, right: 10, top: 40),
+          decoration: const BoxDecoration(
+              color: Color(0xffb8f3d8),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+          child: GridView.count(
+            padding: const EdgeInsets.all(0),
+            shrinkWrap: true,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+            crossAxisCount: 4,
+            children: <Widget>[
+              CalculatorButton(
+                text: 'c',
+                onTap: () {
+                  isBold = true;
+                  setState(() {
                     nilai = '0';
-                  } else {
-                    nilai = nilai.substring(0, nilai.length - 1);
-                  }
-                });
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '7',
-              onTap: () {
-                pressnumber(7);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '8',
-              onTap: () {
-                pressnumber(8);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '9',
-              onTap: () {
-                pressnumber(9);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              foregroundColor: Theme.of(context).primaryColorLight,
-              text: '/',
-              onTap: () {
-                setState(
-                  () {
-                    if (nilai[nilai.length - 1].contains('/')) {
-                      nilai = nilai;
-                    } else {
-                      nilai = '$nilai/';
+                    hasil = "";
+                  });
+                },
+              ),
+              CalculatorButton(
+                text: '+/-',
+                onTap: () {
+                  setState(() {
+                    if (nilai != '0') {
+                      if (nilai.contains('-')) {
+                        nilai = nilai.substring(0, nilai.length - 1);
+                      } else {
+                        nilai = '-$nilai';
+                      }
                     }
-                  },
-                );
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '4',
-              onTap: () {
-                pressnumber(4);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '5',
-              onTap: () {
-                pressnumber(5);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '6',
-              onTap: () {
-                pressnumber(6);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              foregroundColor: Theme.of(context).primaryColorLight,
-              text: 'x',
-              onTap: () {
-                setState(
-                  () {
-                    if (nilai[nilai.length - 1].contains('*')) {
-                      nilai = nilai;
-                    } else {
-                      nilai = '$nilai*';
-                    }
-                  },
-                );
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '1',
-              onTap: () {
-                pressnumber(1);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '2',
-              onTap: () {
-                pressnumber(2);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '3',
-              onTap: () {
-                pressnumber(3);
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              foregroundColor: Theme.of(context).primaryColorLight,
-              text: '-',
-              onTap: () {
-                setState(
-                  () {
-                    if (nilai[nilai.length - 1].contains('-')) {
-                      nilai = nilai;
-                    } else {
-                      nilai = '$nilai-';
-                    }
-                  },
-                );
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '0',
-              onTap: () {
-                pressnumber(0);
-              },
-            ),
-            CalculatorButton(
-                backgroundColor: Colors.white,
-                foregroundColor: Theme.of(context).primaryColorDark,
-                text: '.',
+                  });
+                },
+              ),
+              CalculatorButton(
+                text: '%',
                 onTap: () {
                   setState(
                     () {
-                      if (nilai.contains('.')) {
+                      if (nilai[nilai.length - 1].contains('%')) {
                         nilai = nilai;
                       } else {
-                        nilai = '$nilai.';
+                        nilai = '$nilai%';
                       }
                     },
                   );
-                }),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorLight,
-              foregroundColor: Theme.of(context).primaryColorDark,
-              text: '=',
-              onTap: () {
-                setState(() {
-                  String equation = nilai;
-                  String result;
-
-                  if (equation.endsWith("+") ||
-                      equation.endsWith("-") ||
-                      equation.endsWith("*") ||
-                      equation.endsWith("/")) {
-                    equation = equation.substring(0, equation.length - 1);
-                  }
-
-                  try {
-                    Parser p = Parser();
-                    Expression exp = p.parse(equation);
-                    ContextModel cm = ContextModel();
-                    result = '${exp.evaluate(EvaluationType.REAL, cm)}';
-                  } catch (e) {
-                    result = "Error";
-                  }
-                  nilai = "";
-                  hasil = result;
-                });
-              },
-            ),
-            CalculatorButton(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              foregroundColor: Theme.of(context).primaryColorLight,
-              text: '+',
-              onTap: () {
-                setState(
-                  () {
-                    if (nilai[nilai.length - 1].contains('+')) {
-                      nilai = nilai;
+                },
+              ),
+              CalculatorButton.Icon(
+                text: 'backspace',
+                icon: Icons.backspace,
+                onTap: () {
+                  setState(() {
+                    if (nilai == '0' ||
+                        nilai == '' ||
+                        nilai.length == 1 ||
+                        (nilai[0].contains('-') && nilai.length == 2)) {
+                      nilai = '0';
                     } else {
-                      nilai = '$nilai+';
+                      nilai = nilai.substring(0, nilai.length - 1);
                     }
-                  },
-                );
-              },
-            ),
-          ],
+                  });
+                },
+              ),
+              CalculatorButton(
+                text: '7',
+                onTap: () {
+                  pressnumber(7);
+                },
+              ),
+              CalculatorButton(
+                text: '8',
+                onTap: () {
+                  pressnumber(8);
+                },
+              ),
+              CalculatorButton(
+                text: '9',
+                onTap: () {
+                  pressnumber(9);
+                },
+              ),
+              CalculatorButton(
+                text: '/',
+                onTap: () {
+                  setState(
+                    () {
+                      if (nilai[nilai.length - 1].contains('/')) {
+                        nilai = nilai;
+                      } else {
+                        nilai = '$nilai/';
+                      }
+                    },
+                  );
+                },
+              ),
+              CalculatorButton(
+                text: '4',
+                onTap: () {
+                  pressnumber(4);
+                },
+              ),
+              CalculatorButton(
+                text: '5',
+                onTap: () {
+                  pressnumber(5);
+                },
+              ),
+              CalculatorButton(
+                text: '6',
+                onTap: () {
+                  pressnumber(6);
+                },
+              ),
+              CalculatorButton(
+                text: 'x',
+                onTap: () {
+                  setState(
+                    () {
+                      if (nilai[nilai.length - 1].contains('*')) {
+                        nilai = nilai;
+                      } else {
+                        nilai = '$nilai*';
+                      }
+                    },
+                  );
+                },
+              ),
+              CalculatorButton(
+                text: '1',
+                onTap: () {
+                  pressnumber(1);
+                },
+              ),
+              CalculatorButton(
+                text: '2',
+                onTap: () {
+                  pressnumber(2);
+                },
+              ),
+              CalculatorButton(
+                text: '3',
+                onTap: () {
+                  pressnumber(3);
+                },
+              ),
+              CalculatorButton(
+                text: '-',
+                onTap: () {
+                  setState(
+                    () {
+                      if (nilai[nilai.length - 1].contains('-')) {
+                        nilai = nilai;
+                      } else {
+                        nilai = '$nilai-';
+                      }
+                    },
+                  );
+                },
+              ),
+              CalculatorButton(
+                text: '0',
+                onTap: () {
+                  pressnumber(0);
+                },
+              ),
+              CalculatorButton(
+                  text: '.',
+                  onTap: () {
+                    setState(
+                      () {
+                        if (nilai.contains('.')) {
+                          nilai = nilai;
+                        } else {
+                          nilai = '$nilai.';
+                        }
+                      },
+                    );
+                  }),
+              CalculatorButton(
+                text: '=',
+                onTap: () {
+                  setState(() {
+                    String equation = nilai;
+                    String result;
+
+                    if (equation.endsWith("+") ||
+                        equation.endsWith("-") ||
+                        equation.endsWith("*") ||
+                        equation.endsWith("/")) {
+                      equation = equation.substring(0, equation.length - 1);
+                    }
+
+                    try {
+                      Parser p = Parser();
+                      Expression exp = p.parse(equation);
+                      ContextModel cm = ContextModel();
+                      result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+                    } catch (e) {
+                      result = "Error";
+                    }
+                    isBold = false;
+                    hasil = result;
+                  });
+                },
+              ),
+              CalculatorButton(
+                text: '+',
+                onTap: () {
+                  setState(
+                    () {
+                      if (nilai[nilai.length - 1].contains('+')) {
+                        nilai = nilai;
+                      } else {
+                        nilai = '$nilai+';
+                      }
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         )
       ]),
     );
@@ -327,6 +304,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void pressnumber(int angka) {
     setState(() {
+      isBold = true;
       if (nilai == '0') {
         nilai = '$angka';
       } else {
@@ -338,16 +316,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
 // ignore: must_be_immutable
 class CalculatorButton extends StatelessWidget {
-  final Color backgroundColor;
-  final Color foregroundColor;
   final String text;
   IconData? icon;
   final Function() onTap;
 
   CalculatorButton({
     super.key,
-    required this.backgroundColor,
-    required this.foregroundColor,
     required this.text,
     required this.onTap,
   });
@@ -355,8 +329,6 @@ class CalculatorButton extends StatelessWidget {
   // ignore: non_constant_identifier_names
   CalculatorButton.Icon({
     super.key,
-    required this.backgroundColor,
-    required this.foregroundColor,
     required this.icon,
     required this.text,
     required this.onTap,
@@ -364,23 +336,32 @@ class CalculatorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Padding(
+      padding: const EdgeInsets.all(10),
       child: InkWell(
         onTap: onTap,
         child: Container(
-          color: backgroundColor,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: const Color(0xfffcf6e6),
+              boxShadow: const [
+                BoxShadow(
+                    color: Color(0xff394d3f),
+                    spreadRadius: 2,
+                    offset: Offset(4, 4))
+              ]),
           child: Center(
             child: icon == null
                 ? Text(
                     text,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(color: foregroundColor),
+                    style: const TextStyle(
+                        fontSize: 25,
+                        color: Color(0xff394d3f),
+                        fontWeight: FontWeight.bold),
                   )
                 : Icon(
                     icon,
-                    color: foregroundColor,
+                    color: const Color(0xff394d3f),
                   ),
           ),
         ),
